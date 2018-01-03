@@ -1,22 +1,25 @@
 var webpack = require('webpack');
 
 module.exports = {
+  target: 'electron',
+
   entry: {
-    app: ['webpack/hot/dev-server', './javascripts/entry.js']
+    app: [ './javascripts/entry.js' ]
   },
 
   output: {
-    path: './public/built',
+    path:     './build',
     filename: 'bundle.js',
-    publicPath: 'http://localhost:8080/built/'
   },
+
+  devtool: 'eval-source-map',
 
   devServer: {
     contentBase: './public',
-    publicPath: 'http://localhost:8080/built/'
   },
 
   module: {
+
     loaders: [
       {
         test: /\.jsx?$/,
@@ -27,12 +30,16 @@ module.exports = {
         }
       },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
-      { test: /\.less$/, loader: 'style-loader!css-loader!less-loader'}
+      { test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
+      { test:   /\.json$/, loader: 'json-loader' },
+      {
+        // These are all pdfkit-related packages that need to be ran through browserify:
+        test: /node_modules\/(pdfkit|unicode-properties|fontkit|png-js|linebreak|unicode-properties|brotli)\//,
+        loader: 'transform-loader?brfs',
+      }
     ]
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
   ]
 }
