@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 
 import PDFDocument from 'pdfkit';
 import { Document, Page, setOptions } from 'react-pdf';
-
+ 
 import * as fs from 'fs';
 
 
@@ -19,8 +19,11 @@ class PDFTest extends Component
     {
         super( props );
 
+        // /Users/ericg/Desktop/reactd3v4.pdf
+        // ../media/black_square_transparent_edge.pdf
+
         this.state = {
-          file:     '../media/black_square_transparent_edge.pdf',
+          file:     '/Users/ericg/Desktop/reactd3v4.pdf',
           numPages: null,
         }
 
@@ -29,9 +32,8 @@ class PDFTest extends Component
 
         var doc = new PDFDocument( { size: 'legal' } );
 
-        console.log( process.env.HOME );
-
         doc.pipe( fs.createWriteStream( process.env.HOME + "/test.pdf" ) );
+
         doc.fontSize( 9 );
         doc.font( 'Times-Roman' );
         doc.text( "hello, world! I'm really here" );
@@ -76,13 +78,31 @@ class PDFTest extends Component
       const { file, numPages } = this.state;
 
         return (
-            <div>                                        
-              <img src={this.PNGimage} />
+            <div>
+               <Document file          = {file}
+                         onLoadSuccess = {this.onDocumentLoadSuccess.bind( this )}
+                         onLoadError   = {this.onLoadError.bind( this )}
+                         onSourceError = {this.onSourceError.bind( this )}>
+
+                   {
+                       Array.from(
+                        new Array(numPages),
+                        (el, index) => (
+                            <Page key        = {`page_${index + 1}`}
+                                    pageNumber = {index + 1} />
+                        ),
+                       )
+                   }
+               </Document>
             </div>
         );
 
     }
 }
+
+{/* <div>                                        
+    <img src={this.PNGimage} />
+</div> */}
 
               // <Document file          = {file}
               //           onLoadSuccess = {this.onDocumentLoadSuccess.bind( this )}
