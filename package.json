@@ -6,6 +6,28 @@
   "author": "eric <ericgorr@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.7.10"
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "electron": "^1.7.10",
+    "json-loader": "^0.5.7",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "style-loader": "^0.19.1",
+    "transform-loader": "^0.2.4",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.10.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "watch": "webpack --display-error-details --watch --progress"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "blob-stream": "^0.1.3",
+    "pdfkit": "^0.8.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "^1.0.17"
   }
 }

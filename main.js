@@ -1,7 +1,8 @@
-var app = require('app');
-var BrowserWindow = require('browser-window');
-
-require('crash-reporter').start();
+var electron      = require( 'electron' );
+var app           = electron.app
+var BrowserWindow = electron.BrowserWindow;
+var url           = require( 'url' );
+var path          = require( 'path' );
 
 app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
@@ -18,7 +19,11 @@ app.on('ready', function() {
                                     }
                                  });
 
-  mainWindow.loadUrl('file://' + __dirname + '/public/index.html');
+  mainWindow.loadURL( url.format({
+    pathname: path.join( __dirname, 'public/index.html' ),
+    protocol: 'file:',
+    slashes:  true
+  }));
 
   // mainWindow.loadUrl( 'file://' + '/Users/ericg/Desktop/reactd3v4.pdf' );
 

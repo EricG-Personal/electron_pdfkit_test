@@ -1,9 +1,5 @@
 require( '../less/main.less' );
 
-// const PDFDocument = require( 'pdfkit' );
-// var React    = require('react');
-// var ReactDOM = require('react-dom');
-
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { ipcRenderer, remote } from 'electron';
@@ -20,12 +16,9 @@ class PDFTest extends Component
     constructor( props ) 
     {
         super( props );
-
-        // /Users/ericg/Desktop/reactd3v4.pdf
-        // ../media/black_square_transparent_edge.pdf
-
+        
         this.state = {
-          file:     '/Users/ericg/Desktop/reactd3v4.pdf',
+          file:     '',
           numPages: null,
           pdfData:  null
         }
@@ -55,7 +48,7 @@ class PDFTest extends Component
 
         var myWindow = remote.getCurrentWindow();
 
-        myWindow.webContents.loadURL( "file://" + this.state.file );
+        myWindow.webContents.loadURL( pdfData );
     }
 
 

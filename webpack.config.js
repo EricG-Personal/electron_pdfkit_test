@@ -1,4 +1,7 @@
 var webpack = require('webpack');
+var path = require( 'path' );
+
+var ROOT_PATH = path.resolve( __dirname );
 
 module.exports = {
   target: 'electron',
@@ -8,7 +11,7 @@ module.exports = {
   },
 
   output: {
-    path:     './build',
+    path:     path.resolve( ROOT_PATH + 'build' ),
     filename: 'bundle.js',
   },
 
