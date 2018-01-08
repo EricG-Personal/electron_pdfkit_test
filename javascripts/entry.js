@@ -16,9 +16,9 @@ class PDFTest extends Component
     constructor( props ) 
     {
         super( props );
-        
+
         this.state = {
-          file:     '',
+          file:     'file:///Users/ericg/Desktop/reactd3v4.pdf',
           numPages: null,
           pdfData:  null
         }
@@ -48,7 +48,7 @@ class PDFTest extends Component
 
         var myWindow = remote.getCurrentWindow();
 
-        myWindow.webContents.loadURL( pdfData );
+        myWindow.webContents.loadURL( this.state.pdfData );
     }
 
 

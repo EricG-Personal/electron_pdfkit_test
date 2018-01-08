@@ -11,14 +11,14 @@ module.exports = {
   },
 
   output: {
-    path:     path.resolve( ROOT_PATH + 'build' ),
-    filename: 'bundle.js',
+    path:     path.resolve( ROOT_PATH, 'build' ),
+    filename: 'bundle.js'
   },
 
   devtool: 'eval-source-map',
 
   devServer: {
-    contentBase: './public',
+    contentBase: './public'
   },
 
   module: {
