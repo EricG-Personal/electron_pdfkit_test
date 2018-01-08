@@ -26,6 +26,9 @@ class PDFTest extends Component
           pdfData:  null
         }
 
+        //
+        // USE jsPDF
+        //
         var doc = new jsPDF({unit: 'pt', format: 'legal'});
         var someText = "hello, world!";
         var topCoordinate = 72;
@@ -56,24 +59,27 @@ class PDFTest extends Component
         {
             console.log( "Setting State" );
 
-            mythis.setState({pdfData: blob});
+            mythis.setState({pdfData: blob});            
         }, 5000);
 
 
+        //
+        // USE pdfkit
+        //
         // var doc = new PDFDocument( { size: 'legal' } );
-
+        //
         // this.stream = doc.pipe( blobStream() );
-
+        //
         // doc.fontSize( 9 );
         // doc.font( 'Times-Roman' );
         // doc.text( "hello, world! I'm really here" );
         // doc.rect( 10, 10, 100, 100 ).stroke();
         // doc.end();
-
+        //
         // this.stream.on( 'finish', function()
         // {
         //     console.log( "Stream Finished" );
-
+        //
         //     this.setState( { pdfData: this.stream.toBlobURL( 'application/pdf' ) } );
         // }.bind( this ) );
 
