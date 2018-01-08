@@ -55,7 +55,7 @@ class PDFTest extends Component
 
         var myWindow = remote.getCurrentWindow();
 
-        myWindow.webContents.loadURL( this.state.pdfData );
+        myWindow.webContents.loadURL( "file://" + this.state.file );
     }
 
 

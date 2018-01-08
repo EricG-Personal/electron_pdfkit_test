@@ -20,6 +20,10 @@ app.on('ready', function() {
 
   mainWindow.loadUrl('file://' + __dirname + '/public/index.html');
 
+  // mainWindow.loadUrl( 'file://' + '/Users/ericg/Desktop/reactd3v4.pdf' );
+
+  
+
   mainWindow.openDevTools();
 
   mainWindow.on('closed', function() {
