@@ -1,4 +1,7 @@
 var webpack = require('webpack');
+var path = require( 'path' );
+
+var ROOT_PATH = path.resolve( __dirname );
 
 module.exports = {
   target: 'electron',
@@ -8,14 +11,14 @@ module.exports = {
   },
 
   output: {
-    path:     './build',
-    filename: 'bundle.js',
+    path:     path.resolve( ROOT_PATH, 'build' ),
+    filename: 'bundle.js'
   },
 
   devtool: 'eval-source-map',
 
   devServer: {
-    contentBase: './public',
+    contentBase: './public'
   },
 
   module: {
