@@ -26,6 +26,9 @@ class PDFTest extends Component
           pdfData:  null
         }
 
+        //
+        // USE jsPDF
+        //
         var doc = new jsPDF({unit: 'pt', format: 'legal'});
         var someText = "hello, world!";
         var topCoordinate = 72;
@@ -60,44 +63,59 @@ class PDFTest extends Component
         }, 5000);
 
 
+        //
+        // USE pdfkit
+        //
         // var doc = new PDFDocument( { size: 'legal' } );
-
+        //
         // this.stream = doc.pipe( blobStream() );
-
+        //
         // doc.fontSize( 9 );
         // doc.font( 'Times-Roman' );
         // doc.text( "hello, world! I'm really here" );
         // doc.rect( 10, 10, 100, 100 ).stroke();
         // doc.end();
-
+        //
         // this.stream.on( 'finish', function()
         // {
         //     console.log( "Stream Finished" );
-
+        //
         //     this.setState( { pdfData: this.stream.toBlobURL( 'application/pdf' ) } );
         // }.bind( this ) );
-
     }
 
     componentDidUpdate()
     {
         console.log( "componentDidUpdate" );
 
-        var myWindow = remote.getCurrentWindow();
+        // var myWindow = remote.getCurrentWindow();
 
-        myWindow.loadURL( this.state.pdfData );
+        // myWindow.loadURL( this.state.pdfData );
 
         // myWindow.webContents.loadURL( this.state.file );
 
     }
 
 
+    iframeloaded()
+    {
+        console.log( "iframe loaded - printing" );
+
+        // window.frames[0].focus();
+        // window.frames[0].print();
+
+        // var myWindow = remote.getCurrentWindow();
+
+        // myWindow.webContents.print();
+    }
 
 
     render() 
     {
         return (
-            <div>                
+            <div>   
+                <iframe id="pdf_doc" src={this.state.pdfData} type="application/pdf" width="100%" height="100%" style={{overflow: 'auto'}} onLoad={this.iframeloaded.bind( this )}>
+                </iframe>             
             </div>
         );
 
