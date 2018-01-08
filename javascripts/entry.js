@@ -4,9 +4,10 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { ipcRenderer, remote } from 'electron';
 
-import PDFDocument from 'pdfkit';
+// import PDFDocument from 'pdfkit';
+// const blobStream  = require( 'blob-stream');
 
-const blobStream  = require( 'blob-stream');
+import jsPDF from 'jsPDF';
 
 import * as fs from 'fs';
 
@@ -17,28 +18,64 @@ class PDFTest extends Component
     {
         super( props );
 
+        debugger;
+
         this.state = {
           file:     'file:///Users/ericg/Desktop/reactd3v4.pdf',
           numPages: null,
           pdfData:  null
         }
 
-        var doc = new PDFDocument( { size: 'legal' } );
+        var doc = new jsPDF({unit: 'pt', format: 'legal'});
+        var someText = "hello, world!";
+        var topCoordinate = 72;
+        var leftCoordinate = 72;
+        var padding = 8;
 
-        this.stream = doc.pipe( blobStream() );
+        doc.setFont( "helvetica" );
+        doc.setFontSize( 24 );
 
-        doc.fontSize( 9 );
-        doc.font( 'Times-Roman' );
-        doc.text( "hello, world! I'm really here" );
-        doc.rect( 10, 10, 100, 100 ).stroke();
-        doc.end();
+        var lineHeight 		= doc.getLineHeight();
+        var textWidth  		= doc.getTextWidth( someText );
+        var rectHeight 		= ( lineHeight + ( padding * 2 ) );
+        var halfRectHeight 	= rectHeight / 2;
+        var halfLineHeight	= lineHeight / 2;
+        var textYCoordinate = topCoordinate + halfRectHeight + halfLineHeight;
 
-        this.stream.on( 'finish', function()
+        doc.setDrawColor( 255, 0, 0 );
+        doc.rect( leftCoordinate, topCoordinate, textWidth, rectHeight );
+        doc.text( someText, leftCoordinate + padding, textYCoordinate );
+
+        doc.setDrawColor( 0, 0, 0 );
+        doc.rect( leftCoordinate, textYCoordinate - lineHeight, textWidth, lineHeight );
+
+        var blob   = doc.output( 'bloburl' );
+        var mythis = this;
+
+        setTimeout( function()
         {
-            console.log( "Stream Finished" );
+            console.log( "Setting State" );
 
-            this.setState( { pdfData: this.stream.toBlobURL( 'application/pdf' ) } );
-        }.bind( this ) );
+            mythis.setState({pdfData: blob});
+        }, 5000);
+
+
+        // var doc = new PDFDocument( { size: 'legal' } );
+
+        // this.stream = doc.pipe( blobStream() );
+
+        // doc.fontSize( 9 );
+        // doc.font( 'Times-Roman' );
+        // doc.text( "hello, world! I'm really here" );
+        // doc.rect( 10, 10, 100, 100 ).stroke();
+        // doc.end();
+
+        // this.stream.on( 'finish', function()
+        // {
+        //     console.log( "Stream Finished" );
+
+        //     this.setState( { pdfData: this.stream.toBlobURL( 'application/pdf' ) } );
+        // }.bind( this ) );
 
     }
 
@@ -48,7 +85,9 @@ class PDFTest extends Component
 
         var myWindow = remote.getCurrentWindow();
 
-        myWindow.webContents.loadURL( this.state.pdfData );
+        // myWindow.webContents.loadURL( this.state.pdfData );
+        myWindow.webContents.loadURL( this.state.file );
+
     }
 
 
