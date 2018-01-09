@@ -11,10 +11,10 @@ import jsPDF from 'jsPDF';
 
 import * as fs from 'fs';
 
-require( 'pdfjs-dist' );
+import pdfjsLib from 'pdfjs-dist/webpack';
+import { PDFJS as PDFJSViewer } from 'pdfjs-dist/web/pdf_viewer.js';
 
-PDFJS.workerSrc = require( 'pdfjs-dist/build/pdf.worker.js' );
-
+// PDFJS.workerSrc = require( 'pdfjs-dist/build/pdf.worker.js' );
 // PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
 
 class PDFTest extends Component 
@@ -25,6 +25,7 @@ class PDFTest extends Component
 
         debugger;
 
+        // 'file:///Users/ericg/Desktop/reactd3v4.pdf',
         this.state = {
           file:     '/Users/ericg/Desktop/reactd3v4.pdf',
           numPages: null,
@@ -97,26 +98,39 @@ class PDFTest extends Component
     {
         console.log( "componentDidUpdate" );
 
-        var container = document.getElementById( 'viewerContainer' );
+        // var container = document.getElementById( 'viewerContainer' );
 
-        // this.pdfLinkService = new PDFJS.PDFLinkService();
+        // // this.pdfLinkService = new PDFJS.PDFLinkService();
 
-        this.pdfViewer = new PDFJS.PDFViewer({
-            container:   container,
-            // linkService: this.pdfLinkService,
-        });
+        // this.pdfViewer = new PDFJS.PDFViewer({
+        //     container:   container,
+        //     // linkService: this.pdfLinkService,
+        // });
 
-        // pdfLinkService.setViewer(pdfViewer);
+        // // pdfLinkService.setViewer(pdfViewer);
 
-        PDFJS.getDocument( this.state.file ).then( function ( pdfDocument ) 
-        {
-            // Document loaded, specifying document for the viewer and
-            // the (optional) linkService.
-            pdfViewer.setDocument( pdfDocument );
+        // PDFJS.getDocument( 'this.state.file' ).then( function ( pdfDocument ) 
+        // {
+        //     // Document loaded, specifying document for the viewer and
+        //     // the (optional) linkService.
+        //     pdfViewer.setDocument( pdfDocument );
           
-            // pdfLinkService.setDocument( pdfDocument, null );
+        //     // pdfLinkService.setDocument( pdfDocument, null );
+        // });
+        
+
+        let loadingTask = pdfjsLib.getDocument(this.state.file);
+
+        loadingTask.promise.then((doc) => {
+          console.log(`Document ${this.state.file} loaded ${doc.numPages} page(s)`);
+        //   this.viewer.setState({
+        //     doc,
+        //   });
+        }, (reason) => {
+          console.error(`Error during ${this.state.file} loading: ${reason}`);
         });
     }
+
 
 
 
@@ -128,7 +142,7 @@ class PDFTest extends Component
                 The PDF viewer should appear below...
 
                 <div id="viewerContainer">
-                    <div id="viewer" class="pdfViewer"></div>
+                    <div id="viewer" className="pdfViewer"></div>
                 </div>
 
             </div>
