@@ -11,6 +11,11 @@ import jsPDF from 'jsPDF';
 
 import * as fs from 'fs';
 
+require( 'pdfjs-dist' );
+
+PDFJS.workerSrc = require( 'pdfjs-dist/build/pdf.worker.js' );
+
+// PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
 
 class PDFTest extends Component 
 {
@@ -21,7 +26,7 @@ class PDFTest extends Component
         debugger;
 
         this.state = {
-          file:     'file:///Users/ericg/Desktop/reactd3v4.pdf',
+          file:     '/Users/ericg/Desktop/reactd3v4.pdf',
           numPages: null,
           pdfData:  null
         }
@@ -92,12 +97,25 @@ class PDFTest extends Component
     {
         console.log( "componentDidUpdate" );
 
-        var myWindow = remote.getCurrentWindow();
-        var uuid = this.state.pdfData;
+        var container = document.getElementById( 'viewerContainer' );
 
-        myWindow.loadURL( this.state.pdfData );
+        // this.pdfLinkService = new PDFJS.PDFLinkService();
 
-        // myWindow.webContents.loadURL( this.state.file );
+        this.pdfViewer = new PDFJS.PDFViewer({
+            container:   container,
+            // linkService: this.pdfLinkService,
+        });
+
+        // pdfLinkService.setViewer(pdfViewer);
+
+        PDFJS.getDocument( this.state.file ).then( function ( pdfDocument ) 
+        {
+            // Document loaded, specifying document for the viewer and
+            // the (optional) linkService.
+            pdfViewer.setDocument( pdfDocument );
+          
+            // pdfLinkService.setDocument( pdfDocument, null );
+        });
     }
 
 
@@ -105,7 +123,14 @@ class PDFTest extends Component
     render() 
     {
         return (
-            <div>                
+            <div>
+
+                The PDF viewer should appear below...
+
+                <div id="viewerContainer">
+                    <div id="viewer" class="pdfViewer"></div>
+                </div>
+
             </div>
         );
     }

@@ -7,12 +7,13 @@ module.exports = {
   target: 'electron',
 
   entry: {
-    app: [ './javascripts/entry.js' ]
+    app:          './javascripts/entry.js',
+    'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry'
   },
 
   output: {
     path:     path.resolve( ROOT_PATH, 'build' ),
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
 
   devtool: 'eval-source-map',
@@ -44,5 +45,11 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        screw_ie8: true,
+        warnings: false
+      }
+    })
   ]
 }
