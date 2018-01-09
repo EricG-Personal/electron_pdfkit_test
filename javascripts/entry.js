@@ -108,37 +108,39 @@ class PDFTest extends Component
     {
         console.log( "componentDidUpdate" );
 
-        // var container = document.getElementById( 'viewerContainer' );
+        var container = document.getElementById( 'viewerContainer' );
 
-        // // this.pdfLinkService = new PDFJS.PDFLinkService();
+        // this.pdfLinkService = new PDFJS.PDFLinkService();
 
-        // this.pdfViewer = new PDFJS.PDFViewer({
-        //     container:   container,
-        //     // linkService: this.pdfLinkService,
-        // });
+        this.pdfViewer = new PDFJS.PDFViewer({
+            container:   container,
+            // linkService: this.pdfLinkService,
+        });
 
-        // // pdfLinkService.setViewer(pdfViewer);
+        // pdfLinkService.setViewer(pdfViewer);
 
-        // PDFJS.getDocument( 'this.state.file' ).then( function ( pdfDocument ) 
-        // {
-        //     // Document loaded, specifying document for the viewer and
-        //     // the (optional) linkService.
-        //     pdfViewer.setDocument( pdfDocument );
+        var mythis = this;
+
+        PDFJS.getDocument( this.state.file ).then( function ( pdfDocument ) 
+        {
+            // Document loaded, specifying document for the viewer and
+            // the (optional) linkService.
+            mythis.pdfViewer.setDocument( pdfDocument );
           
-        //     // pdfLinkService.setDocument( pdfDocument, null );
-        // });
+            // pdfLinkService.setDocument( pdfDocument, null );
+        });
         
 
-        let loadingTask = pdfjsLib.getDocument(this.state.file);
+        // let loadingTask = pdfjsLib.getDocument(this.state.file);
 
-        loadingTask.promise.then((doc) => {
-          console.log(`Document ${this.state.file} loaded ${doc.numPages} page(s)`);
-        //   this.viewer.setState({
-        //     doc,
-        //   });
-        }, (reason) => {
-          console.error(`Error during ${this.state.file} loading: ${reason}`);
-        });
+        // loadingTask.promise.then((doc) => {
+        //   console.log(`Document ${this.state.file} loaded ${doc.numPages} page(s)`);
+        // //   this.viewer.setState({
+        // //     doc,
+        // //   });
+        // }, (reason) => {
+        //   console.error(`Error during ${this.state.file} loading: ${reason}`);
+        // });
     }
 
 

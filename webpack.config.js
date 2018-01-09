@@ -12,8 +12,9 @@ module.exports = {
   },
 
   output: {
-    path:     path.resolve( ROOT_PATH, 'build' ),
-    filename: '[name].bundle.js'
+    path:        path.resolve( ROOT_PATH, 'build' ),
+    publicPath:  '../build/',
+    filename:    '[name].bundle.js'
   },
 
   devtool: 'eval-source-map',
