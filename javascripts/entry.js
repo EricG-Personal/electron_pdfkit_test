@@ -29,39 +29,29 @@ class PDFTest extends Component
         //
         // USE jsPDF
         //
-        var doc = new jsPDF({unit: 'pt', format: 'legal'});
+        this.doc = new jsPDF({unit: 'pt', format: 'legal'});
+
         var someText = "hello, world!";
         var topCoordinate = 72;
         var leftCoordinate = 72;
         var padding = 8;
 
-        doc.setFont( "helvetica" );
-        doc.setFontSize( 24 );
+        this.doc.setFont( "helvetica" );
+        this.doc.setFontSize( 24 );
 
-        var lineHeight 		= doc.getLineHeight();
-        var textWidth  		= doc.getTextWidth( someText );
+        var lineHeight 		= this.doc.getLineHeight();
+        var textWidth  		= this.doc.getTextWidth( someText );
         var rectHeight 		= ( lineHeight + ( padding * 2 ) );
         var halfRectHeight 	= rectHeight / 2;
         var halfLineHeight	= lineHeight / 2;
         var textYCoordinate = topCoordinate + halfRectHeight + halfLineHeight;
 
-        doc.setDrawColor( 255, 0, 0 );
-        doc.rect( leftCoordinate, topCoordinate, textWidth, rectHeight );
-        doc.text( someText, leftCoordinate + padding, textYCoordinate );
+        this.doc.setDrawColor( 255, 0, 0 );
+        this.doc.rect( leftCoordinate, topCoordinate, textWidth, rectHeight );
+        this.doc.text( someText, leftCoordinate + padding, textYCoordinate );
 
-        doc.setDrawColor( 0, 0, 0 );
-        doc.rect( leftCoordinate, textYCoordinate - lineHeight, textWidth, lineHeight );
-
-        var blob   = doc.output( 'bloburl' );
-        var mythis = this;
-
-        setTimeout( function()
-        {
-            console.log( "Setting State" );
-
-            mythis.setState({pdfData: blob});            
-        }, 5000);
-
+        this.doc.setDrawColor( 0, 0, 0 );
+        this.doc.rect( leftCoordinate, textYCoordinate - lineHeight, textWidth, lineHeight );
 
         //
         // USE pdfkit
@@ -82,21 +72,33 @@ class PDFTest extends Component
         //
         //     this.setState( { pdfData: this.stream.toBlobURL( 'application/pdf' ) } );
         // }.bind( this ) );
-
     }
+
+
+
+    componentDidMount()
+    {
+        console.log( "componentDidMount" );
+        this.bloburl = this.doc.output( 'bloburl' );
+
+        console.log( this.bloburl );
+
+        this.setState({pdfData: this.bloburl});
+    }
+
+
 
     componentDidUpdate()
     {
         console.log( "componentDidUpdate" );
 
         var myWindow = remote.getCurrentWindow();
+        var uuid = this.state.pdfData;
 
         myWindow.loadURL( this.state.pdfData );
 
         // myWindow.webContents.loadURL( this.state.file );
-
     }
-
 
 
 
@@ -106,7 +108,6 @@ class PDFTest extends Component
             <div>                
             </div>
         );
-
     }
 }
 
