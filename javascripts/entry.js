@@ -11,18 +11,21 @@ import jsPDF from 'jsPDF';
 
 import * as fs from 'fs';
 
-import pdfjsLib from 'pdfjs-dist/webpack';
+// import pdfjsLib from 'pdfjs-dist/webpack.js';
 import { PDFJS as PDFJSViewer } from 'pdfjs-dist/web/pdf_viewer.js';
+
+var pdfjsLib = require( 'pdfjs-dist/webpack.js' );
 
 // pdfjsLib.workerSrc = require( 'pdfjs-dist/build/pdf.worker.js' );
 // pdfjsLib.workerSrc = require.resolve( 'pdfjs-dist/build/pdf.worker.js' );
 // pdfjsLib.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
 
-// pdfjsLib.PDFJS.workerSrc = require.resolve( 'pdfjs-dist/build/pdf.worker.js' );
+pdfjsLib.PDFJS.workerSrc = require.resolve( 'pdfjs-dist/build/pdf.worker.js' );
+// PDFJS.workerSrc = require.resolve( 'pdfjs-dist/build/pdf.worker.js' );
 
-PDFJS.workerSrc = require.resolve( 'pdfjs-dist/build/pdf.worker.js' );
+// PDFJS.workerSrc = '../node_modules/pdfjs-dist/build/pdf.worker.js';
+// pdfjsLib.PDFJS.workerSrc = '../node_modules/pdfjs-dist/build/pdf.worker.js';
 
-// PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
 
 class PDFTest extends Component 
 {
