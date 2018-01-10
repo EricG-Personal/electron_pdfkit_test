@@ -14,7 +14,7 @@ import * as fs from 'fs';
 import pdfjsLib from 'pdfjs-dist/webpack.js';
 import { PDFJS as PDFJSViewer } from 'pdfjs-dist/web/pdf_viewer.js';
 
-
+import '../node_modules/pdfjs-dist/web/pdf_viewer.css';
 
 class PDFTest extends Component 
 {

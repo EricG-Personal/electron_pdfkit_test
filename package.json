@@ -25,6 +25,8 @@
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "blob-stream": "^0.1.3",
+    "file-loader": "^1.1.6",
+    "image-webpack-loader": "^3.4.2",
     "jspdf": "^1.3.5",
     "pdf.js": "^0.1.0",
     "pdfjs-dist": "^2.0.252",
