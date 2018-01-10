@@ -86,17 +86,13 @@ class PDFTest extends Component
         console.log( "componentDidMount" );
 
         //
-        // USE a blob url
-        //
-        // this.bloburl = this.doc.output( 'bloburl' );
-        // console.log( this.bloburl );
-        // this.setState({pdfData: this.bloburl});
-
-        //
         // USE an array buffer
         //
+        // It may be a bit nicer to use a blob url, but PDF.js does not support them.
+        // https://github.com/mozilla/pdf.js/issues/9071
+        //
         this.bloburl = this.doc.output( 'arraybuffer' );
-        console.log( this.bloburl );
+        // fs.writeFile( '/Users/ericg/Desktop/test.pdf', new Buffer( this.bloburl ) );
         this.setState({pdfData: this.bloburl});
     }
 
