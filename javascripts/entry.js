@@ -47,7 +47,7 @@ class PDFTest extends Component
         //
         this.doc = new jsPDF({unit: 'pt', format: 'legal'});
 
-        var someText = "hello, world!";
+        var someText = "hello, wo212rld!";
         var topCoordinate = 72;
         var leftCoordinate = 72;
         var padding = 8;
@@ -95,11 +95,20 @@ class PDFTest extends Component
     componentDidMount()
     {
         console.log( "componentDidMount" );
+
+        //
+        // USE a blob url
+        //
         this.bloburl = this.doc.output( 'bloburl' );
-
         console.log( this.bloburl );
-
         this.setState({pdfData: this.bloburl});
+
+        //
+        // USE an array buffer
+        //
+        // this.bloburl = this.doc.output( 'arraybuffer' );
+        // console.log( this.bloburl );
+        // this.setState({pdfData: this.bloburl});
     }
 
 
@@ -119,30 +128,22 @@ class PDFTest extends Component
 
         // pdfLinkService.setViewer(pdfViewer);
 
-        var mythis = this;
-
-        PDFJS.getDocument( this.state.file ).then( function ( pdfDocument ) 
+        // PDFJS.getDocument( this.state.file ).then( function ( pdfDocument ) 
+        PDFJS.getDocument( this.state.pdfData ).then( function ( pdfDocument ) 
         {
             // Document loaded, specifying document for the viewer and
             // the (optional) linkService.
-            mythis.pdfViewer.setDocument( pdfDocument );
-          
+            this.pdfViewer.setDocument( pdfDocument );          
             // pdfLinkService.setDocument( pdfDocument, null );
-        });
-        
-
-        // let loadingTask = pdfjsLib.getDocument(this.state.file);
-
-        // loadingTask.promise.then((doc) => {
-        //   console.log(`Document ${this.state.file} loaded ${doc.numPages} page(s)`);
-        // //   this.viewer.setState({
-        // //     doc,
-        // //   });
-        // }, (reason) => {
-        //   console.error(`Error during ${this.state.file} loading: ${reason}`);
-        // });
+        }.bind( this ) );
     }
 
+
+
+    handlePrint()
+    {
+        console.log( "handle print" );
+    }
 
 
 
@@ -150,6 +151,9 @@ class PDFTest extends Component
     {
         return (
             <div>
+
+                <button onClick={this.handlePrint.bind(this)}>Print</button>
+                <br/>
 
                 The PDF viewer should appear below...
 
