@@ -34,7 +34,7 @@ class PDFTest extends Component
         //
         // USE jsPDF
         //
-        this.doc = new jsPDF({unit: 'pt', format: 'legal'});
+        this.doc = new jsPDF({unit: 'pt', format: 'a6'});
 
         var someText = "hello, wo212rld!";
         var topCoordinate = 72;
